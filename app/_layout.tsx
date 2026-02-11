@@ -3,12 +3,10 @@ import { Stack } from "expo-router";
 export default function Layout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
       <Stack.Screen name="login" />
       <Stack.Screen name="signup" />
-      <Stack.Screen name="dashboard/index" />
-      <Stack.Screen name="dashboard/tasks" />
-      <Stack.Screen name="dashboard/progress" />
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
     </Stack>
   );
 }
