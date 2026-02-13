@@ -4,21 +4,53 @@ import {
   useFonts,
 } from "@expo-google-fonts/pixelify-sans";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Line } from "react-native-svg";
+import { ChildHomeScreen } from './index_enfant';
 
 export default function HomeScreen() {
   const { colors, isDarkMode, toggleTheme } = useTheme();
+  const [homePageType, setHomePageType] = useState<'adult' | 'child'>('adult');
+  const [loading, setLoading] = useState(true);
 
   // Load Pixelify Sans font
   let [fontsLoaded] = useFonts({
     PixelifySans_600SemiBold,
   });
 
-  if (!fontsLoaded) {
+  // Load home page preference whenever the tab comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      const loadPreference = async () => {
+        try {
+          const preference = await AsyncStorage.getItem('homePageType');
+          if (preference === 'adult' || preference === 'child') {
+            setHomePageType(preference);
+          }
+        } catch (error) {
+          console.error('Error loading home page preference:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadPreference();
+    }, [])
+  );
+
+  if (!fontsLoaded || loading) {
     return null;
   }
+
+  // Show child version if preference is set to child
+  if (homePageType === 'child') {
+    return <ChildHomeScreen />;
+  }
+
+  // Show adult version (constellation view)
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>

@@ -1,7 +1,9 @@
-import { router } from 'expo-router'
-import { Ionicons } from "@expo/vector-icons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from '@/context/ThemeContext';
+import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type ItemProps = {
   title: string;
@@ -11,7 +13,7 @@ type ItemProps = {
 
 function Item({ title, icon, onPress }: ItemProps) {
   const { colors } = useTheme();
-  
+
   return (
     <Pressable
       onPress={onPress}
@@ -33,7 +35,37 @@ function Item({ title, icon, onPress }: ItemProps) {
 
 export default function Profile() {
   const { colors } = useTheme();
-  
+  const [homePageType, setHomePageType] = useState<'adult' | 'child'>('adult');
+
+  // Load home page preference
+  useEffect(() => {
+    const loadPreference = async () => {
+      try {
+        const preference = await AsyncStorage.getItem('homePageType');
+        if (preference === 'adult' || preference === 'child') {
+          setHomePageType(preference);
+        }
+      } catch (error) {
+        console.error('Error loading home page preference:', error);
+      }
+    };
+
+    loadPreference();
+  }, []);
+
+  // Toggle between adult and child mode
+  const handleToggleGameMode = async () => {
+    const newMode = homePageType === 'adult' ? 'child' : 'adult';
+    try {
+      await AsyncStorage.setItem('homePageType', newMode);
+      setHomePageType(newMode);
+      // You might want to show a toast or alert here to inform the user
+      alert(`Home page changed to ${newMode === 'adult' ? 'Adult' : 'Child'} mode. Please navigate to the Home tab to see the change.`);
+    } catch (error) {
+      console.error('Error saving home page preference:', error);
+    }
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.primary }]}>Profile Settings</Text>
@@ -42,10 +74,14 @@ export default function Profile() {
       <Item title="Language" icon="language-outline" />
       <Item title="Export Medical Data" icon="paper-plane-outline" />
       <Item title="Notifications" icon="notifications-outline" onPress={() => router.push('/notifications')} />
-      <Item title="Change the game" icon="game-controller-outline" />
+      <Item
+        title={`Change the game (Current: ${homePageType === 'adult' ? 'Adult' : 'Child'})`}
+        icon="game-controller-outline"
+        onPress={handleToggleGameMode}
+      />
       <Item title="Delete the compte" icon="trash-outline" />
       <Item title="Signaler un bug" icon="bug-outline" />
-      <Item title="Sign Out" icon="log-out-outline" onPress={() => router.push('/login')}/>
+      <Item title="Sign Out" icon="log-out-outline" onPress={() => router.push('/login')} />
     </View>
   );
 }

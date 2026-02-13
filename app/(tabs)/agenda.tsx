@@ -6,19 +6,19 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 
 
 const dailyData = [
-  { date: '09/02', status: 'Great Efforts', message: 'Celebrate when you do well 😊', average: '8/1 avg.', bg: '#FFFFFF' },
-  { date: '10/02', status: 'Almost There', message: 'Your message was strong, but not too long 😍😍😍', average: '9/1 avg.', bg: '#FFFFFF' },
-  { date: '11/02', status: 'Looks Good', message: 'Thanks for sharing your thoughts 😊', average: '4/1 avg.', bg: '#FFFFFF' },
-  { date: '12/02', status: 'Great Efforts', message: 'Excellent! You &apos; re working on the great things! 😊', average: '9/1 avg.', bg: '#FFFFFF' },
-  { date: '13/02', status: 'Good', message: 'Great job as a team to bring our best game in going 😊', average: '6/1 avg.', bg: '#FFFFFF' },
-  { date: '14/02', status: 'Amazing', message: 'Thanks for always trying to help out and make it great! 😊', average: '5/1 avg.', bg: '#FFFFFF' },
-  { date: '15/02', status: 'Excellent', message: 'Fantastic run on 🏅', average: '-', bg: '#FFFFFF' },
-  { date: '16/02', status: 'Great Efforts', message: 'Celebrate when you do well 😊', average: '8/1 avg.', bg: '#FFFFFF' },
-  { date: '17/02', status: 'Almost There', message: 'Your message was strong, but not too long 😍😍😍', average: '9/1 avg.', bg: '#FFFFFF' },
-  { date: '18/02', status: 'Looks Good', message: 'Thanks for sharing your thoughts 😊', average: '4/1 avg.', bg: '#FFFFFF' },
-  { date: '19/02', status: 'Great Efforts', message: 'Excellent! You &apos; re working on the great things! 😊', average: '9/1 avg.', bg: '#FFFFFF' },
-  { date: '20/02', status: 'Good', message: 'Great job as a team to bring our best game in going 😊', average: '6/1 avg.', bg: '#FFFFFF' },
-  { date: '21/02', status: 'Amazing', message: 'Thanks for always trying to help out and make it great! 😊', average: '5/1 avg.', bg: '#FFFFFF' },
+  { date: '09/02', status: 'Great Efforts', message: 'Celebrate when you do well 😊', average: '137 mg/dl.', bg: '#FFFFFF' },
+  { date: '10/02', status: 'Almost There', message: 'Your message was strong, but not too long 😍😍😍', average: '165 mg/dl.', bg: '#FFFFFF' },
+  { date: '11/02', status: 'Looks Good', message: 'Thanks for sharing your thoughts 😊', average: '154 mg/dl.', bg: '#FFFFFF' },
+  { date: '12/02', status: 'Great Efforts', message: 'Excellent! You &apos; re working on the great things! 😊', average: '213 mg/dl.', bg: '#FFFFFF' },
+  { date: '13/02', status: 'Good', message: 'Great job as a team to bring our best game in going 😊', average: '125 mg/dl.', bg: '#FFFFFF' },
+  { date: '14/02', status: 'Amazing', message: 'Thanks for always trying to help out and make it great! 😊', average: '95 mg/dl.', bg: '#FFFFFF' },
+  { date: '15/02', status: 'Excellent', message: 'Fantastic run on 🏅', average: '85 mg/dl.', bg: '#FFFFFF' },
+  { date: '16/02', status: 'Great Efforts', message: 'Celebrate when you do well 😊', average: '113 mg/dl.', bg: '#FFFFFF' },
+  { date: '17/02', status: 'Almost There', message: 'Your message was strong, but not too long 😍😍😍', average: '125 mg/dl.', bg: '#FFFFFF' },
+  { date: '18/02', status: 'Looks Good', message: 'Thanks for sharing your thoughts 😊', average: '153 mg/dl.', bg: '#FFFFFF' },
+  { date: '19/02', status: 'Great Efforts', message: 'Excellent! You &apos; re working on the great things! 😊', average: '168 mg/dl.', bg: '#FFFFFF' },
+  { date: '20/02', status: 'Good', message: 'Great job as a team to bring our best game in going 😊', average: '93 mg/dl.', bg: '#FFFFFF' },
+  { date: '21/02', status: 'Amazing', message: 'Thanks for always trying to help out and make it great! 😊', average: '178 mg/dl.', bg: '#FFFFFF' },
 ];
 
 export default function AgendaScreen() {
