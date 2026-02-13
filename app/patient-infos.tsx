@@ -1,31 +1,41 @@
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Modal,
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import { router } from "expo-router";
-import { useState } from "react";
-import {
   PixelifySans_400Regular,
   PixelifySans_600SemiBold,
   PixelifySans_700Bold,
   useFonts,
 } from "@expo-google-fonts/pixelify-sans";
 import { Ionicons } from "@expo/vector-icons";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  Alert,
+  FlatList,
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,} from "react-native";
 // Generate options for dropdowns
-const generateDays = () => Array.from({ length: 31 }, (_, i) => (i + 1).toString());
-const generateMonths = () => Array.from({ length: 12 }, (_, i) => (i + 1).toString());
-const generateYears = () => Array.from({ length: 100 }, (_, i) => i.toString());
+const generateDays = () =>
+  Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+const generateMonths = () =>
+  Array.from({ length: 12 }, (_, i) => (i + 1).toString());
+const generateYears = () => {
+  const startYear = 1926;
+  const endYear = 2026;
+  const years = [];
+  for (let y = startYear; y <= endYear; y++) {
+    years.push(y.toString());
+  }
+  return years;
+};
 
 export default function PatientInfosScreen() {
   const [age, setAge] = useState("");
@@ -54,6 +64,17 @@ export default function PatientInfosScreen() {
     PixelifySans_600SemiBold,
     PixelifySans_700Bold,
   });
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("@patientData");
+        console.log("Patient Data:", jsonValue);
+      } catch (e) {
+        console.log("Error reading patient data:", e);
+      }
+    };
+    loadData();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -77,8 +98,7 @@ export default function PatientInfosScreen() {
       visible={visible}
       transparent
       animationType="slide"
-      onRequestClose={onClose}
-    >
+      onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
@@ -96,8 +116,7 @@ export default function PatientInfosScreen() {
                 onPress={() => {
                   onSelect(item);
                   onClose();
-                }}
-              >
+                }}>
                 <Text style={styles.pickerItemText}>{item}</Text>
               </TouchableOpacity>
             )}
@@ -106,224 +125,270 @@ export default function PatientInfosScreen() {
       </View>
     </Modal>
   );
+  const handleSignUp = async () => {
+    if (
+      !age ||
+      !type ||
+      !gender ||
+      !height ||
+      !weight ||
+      !bloodSugar ||
+      !diabetesDuration.day ||
+      !diabetesDuration.month ||
+      !diabetesDuration.years
+    ) {
+      Alert.alert("Incomplete form", "Please fill all required fields");
+      return;
+    }
+
+    // Prepare the data object
+    const patientData = {
+      age,
+      type,
+      gender,
+      height,
+      weight,
+      bloodSugar,
+      diabetesDuration,
+    };
+
+    try {
+      // Save data locally on device
+      await AsyncStorage.setItem("@patientData", JSON.stringify(patientData));
+      router.replace("/(tabs)"); // navigate to main app
+    } catch (e) {
+      Alert.alert("Error", "Could not save data locally");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+      behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
           <ScrollView
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-          >
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Ionicons name="arrow-back" size={24} color="#4DA6FF" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Patient Informations</Text>
-        </View>
+            showsVerticalScrollIndicator={false}>
+            {/* Header */}
+            <View style={styles.header}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => router.back()}>
+                <Ionicons name="arrow-back" size={24} color="#4DA6FF" />
+              </TouchableOpacity>
+              <Text style={styles.headerTitle}>Patient Informations</Text>
+            </View>
 
-        {/* Patient Information Section */}
-        <View style={styles.section}>
-          {/* Age Input */}
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Age:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={age}
-              onChangeText={setAge}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-              keyboardType="numeric"
-            />
-          </View>
-
-          {/* Type Input */}
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Type:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={type}
-              onChangeText={setType}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-            />
-          </View>
-
-          {/* Gender Selection */}
-          <View style={styles.genderRow}>
-            <Text style={styles.label}>Gender:</Text>
-            <TouchableOpacity
-              style={styles.checkboxContainer}
-              onPress={() => setGender("male")}
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  gender === "male" && styles.checkboxSelected,
-                ]}
-              >
-                {gender === "male" && (
-                  <View style={styles.checkboxInner} />
-                )}
+            {/* Patient Information Section */}
+            <View style={styles.section}>
+              {/* Age Input */}
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Age:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={age}
+                  onChangeText={setAge}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                  keyboardType="numeric"
+                />
               </View>
-              <Text style={styles.checkboxLabel}>Male</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.checkboxContainer}
-              onPress={() => setGender("female")}
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  gender === "female" && styles.checkboxSelected,
-                ]}
-              >
-                {gender === "female" && (
-                  <View style={styles.checkboxInner} />
-                )}
+              {/* Type Input */}
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Type:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={type}
+                  onChangeText={setType}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                />
               </View>
-              <Text style={styles.checkboxLabel}>Female</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        {/* Measurements Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Measurements</Text>
+              {/* Gender Selection */}
+              <View style={styles.genderRow}>
+                <Text style={styles.label}>Gender:</Text>
+                <TouchableOpacity
+                  style={styles.checkboxContainer}
+                  onPress={() => setGender("male")}>
+                  <View
+                    style={[
+                      styles.checkbox,
+                      gender === "male" && styles.checkboxSelected,
+                    ]}>
+                    {gender === "male" && <View style={styles.checkboxInner} />}
+                  </View>
+                  <Text style={styles.checkboxLabel}>Male</Text>
+                </TouchableOpacity>
 
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Height:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={height}
-              onChangeText={setHeight}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-              keyboardType="numeric"
-            />
-          </View>
+                <TouchableOpacity
+                  style={styles.checkboxContainer}
+                  onPress={() => setGender("female")}>
+                  <View
+                    style={[
+                      styles.checkbox,
+                      gender === "female" && styles.checkboxSelected,
+                    ]}>
+                    {gender === "female" && (
+                      <View style={styles.checkboxInner} />
+                    )}
+                  </View>
+                  <Text style={styles.checkboxLabel}>Female</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
 
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Weight:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={weight}
-              onChangeText={setWeight}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-              keyboardType="numeric"
-            />
-          </View>
+            {/* Measurements Section */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Measurements</Text>
 
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Blood Sugar Level:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={bloodSugar}
-              onChangeText={setBloodSugar}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-              keyboardType="numeric"
-            />
-          </View>
-        </View>
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Height:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={height}
+                  onChangeText={setHeight}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                  keyboardType="numeric"
+                />
+              </View>
 
-        {/* Medical History Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Medical History</Text>
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Weight:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={weight}
+                  onChangeText={setWeight}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                  keyboardType="numeric"
+                />
+              </View>
 
-          <Text style={styles.questionText}>
-            How long have you had diabetes?
-          </Text>
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Blood Sugar Level:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={bloodSugar}
+                  onChangeText={setBloodSugar}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                  keyboardType="numeric"
+                />
+              </View>
+            </View>
 
-          <View style={styles.dropdownRow}>
-            <TouchableOpacity
-              style={styles.dropdown}
-              onPress={() => setShowDayPicker(true)}
-            >
-              <Text style={styles.dropdownText}>
-                {diabetesDuration.day || "Day"}
+            {/* Medical History Section */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Medical History</Text>
+
+              <Text style={styles.questionText}>
+                How long have you had diabetes?
               </Text>
-              <Ionicons name="chevron-down" size={20} color="#04082A" />
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.dropdown}
-              onPress={() => setShowMonthPicker(true)}
-            >
-              <Text style={styles.dropdownText}>
-                {diabetesDuration.month || "Month"}
+              <View style={styles.dropdownRow}>
+                <TouchableOpacity
+                  style={styles.dropdown}
+                  onPress={() => setShowDayPicker(true)}>
+                  <Text style={styles.dropdownText}>
+                    {diabetesDuration.day || "Day"}
+                  </Text>
+                  <Ionicons name="chevron-down" size={20} color="#04082A" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.dropdown}
+                  onPress={() => setShowMonthPicker(true)}>
+                  <Text style={styles.dropdownText}>
+                    {diabetesDuration.month || "Month"}
+                  </Text>
+                  <Ionicons name="chevron-down" size={20} color="#04082A" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.dropdown}
+                  onPress={() => setShowYearPicker(true)}>
+                  <Text style={styles.dropdownText}>
+                    {diabetesDuration.years || "Years"}
+                  </Text>
+                  <Ionicons name="chevron-down" size={20} color="#04082A" />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Emergency Contact Section */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>
+                Emergency Contact (Optional)
               </Text>
-              <Ionicons name="chevron-down" size={20} color="#04082A" />
-            </TouchableOpacity>
 
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Name:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={emergencyName}
+                  onChangeText={setEmergencyName}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                />
+              </View>
+
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Phone Number:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={emergencyPhone}
+                  onChangeText={setEmergencyPhone}
+                  placeholder="__________"
+                  placeholderTextColor="#8C92D9"
+                  keyboardType="phone-pad"
+                />
+              </View>
+
+              <View style={styles.inputRow}>
+                <Text style={styles.label}>Relationship:</Text>
+                <TextInput
+                  style={styles.lineInput}
+                  value={emergencyRelationship}
+                  onChangeText={setEmergencyRelationship}
+                  placeholder="________"
+                  placeholderTextColor="#8C92D9"
+                />
+              </View>
+            </View>
+
+            {/* Sign Up Button */}
             <TouchableOpacity
-              style={styles.dropdown}
-              onPress={() => setShowYearPicker(true)}
-            >
-              <Text style={styles.dropdownText}>
-                {diabetesDuration.years || "Years"}
-              </Text>
-              <Ionicons name="chevron-down" size={20} color="#04082A" />
+              style={[
+                styles.signUpButton,
+                (!age ||
+                  !type ||
+                  !gender ||
+                  !height ||
+                  !weight ||
+                  !bloodSugar ||
+                  !diabetesDuration.day ||
+                  !diabetesDuration.month ||
+                  !diabetesDuration.years) && { opacity: 0.5 },
+              ]}
+              disabled={
+                !age ||
+                !type ||
+                !gender ||
+                !height ||
+                !weight ||
+                !bloodSugar ||
+                !diabetesDuration.day ||
+                !diabetesDuration.month ||
+                !diabetesDuration.years
+              }
+              onPress={handleSignUp}>
+              <Text style={styles.signUpButtonText}>Sign Up</Text>
             </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Emergency Contact Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Emergency Contact (Optional)</Text>
-
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Name:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={emergencyName}
-              onChangeText={setEmergencyName}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-            />
-          </View>
-
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Phone Number:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={emergencyPhone}
-              onChangeText={setEmergencyPhone}
-              placeholder="__________"
-              placeholderTextColor="#8C92D9"
-              keyboardType="phone-pad"
-            />
-          </View>
-
-          <View style={styles.inputRow}>
-            <Text style={styles.label}>Relationship:</Text>
-            <TextInput
-              style={styles.lineInput}
-              value={emergencyRelationship}
-              onChangeText={setEmergencyRelationship}
-              placeholder="________"
-              placeholderTextColor="#8C92D9"
-            />
-          </View>
-        </View>
-
-        {/* Sign Up Button */}
-        <TouchableOpacity
-          style={styles.signUpButton}
-          onPress={() => router.replace("/(tabs)")}
-        >
-          <Text style={styles.signUpButtonText}>Sign Up</Text>
-        </TouchableOpacity>
           </ScrollView>
 
           {/* Picker Modals */}

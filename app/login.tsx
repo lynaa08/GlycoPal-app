@@ -1,27 +1,11 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import { router } from "expo-router";
-import { useState } from "react";
-import {
-  PixelifySans_400Regular,
-  PixelifySans_600SemiBold,
-  PixelifySans_700Bold,
-  useFonts,
-} from "@expo-google-fonts/pixelify-sans";
+  import {PixelifySans_400Regular,PixelifySans_600SemiBold,PixelifySans_700Bold,useFonts,} from "@expo-google-fonts/pixelify-sans";
+  import { router } from "expo-router";
+  import { useState } from "react";
+  import {Keyboard,KeyboardAvoidingView,Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,TouchableWithoutFeedback,View,}from "react-native";
 
-export default function LoginScreen() {
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
+   export default function LoginScreen() {
+    const [identifier, setIdentifier] = useState("");
+    const [password, setPassword] = useState("");
 
   // Load Pixelify Sans font
   let [fontsLoaded] = useFonts({
@@ -33,69 +17,81 @@ export default function LoginScreen() {
   if (!fontsLoaded) {
     return null;
   }
+  const handleLogin = () => {
+    if (!identifier || !password) {
+      alert("Please fill in both Identifier and Password");
+      return;
+    }
+
+    // All fields are filled, continue
+    router.replace("/(tabs)");
+  };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+      behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-        >
-      {/* Logo */}
-      <View style={styles.logoContainer}>
-        <Text style={styles.logo}>
-          Log <Text style={styles.logoBlue}>In</Text>
-        </Text>
-      </View>
+          showsVerticalScrollIndicator={false}>
+          {/* Logo */}
+          <View style={styles.logoContainer}>
+            <Text style={styles.logo}>
+              Log <Text style={styles.logoBlue}>In</Text>
+            </Text>
+          </View>
 
-      {/* Form */}
-      <View style={styles.form}>
-        {/* Identifier Input */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Identifier</Text>
-          <TextInput
-            style={styles.input}
-            value={identifier}
-            onChangeText={setIdentifier}
-            placeholder=""
-            placeholderTextColor="#8C92D9"
-            autoCapitalize="none"
-          />
-        </View>
+          {/* Form */}
+          <View style={styles.form}>
+            {/* Identifier Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Identifier</Text>
+              <TextInput
+                style={styles.input}
+                value={identifier}
+                onChangeText={setIdentifier}
+                placeholder=""
+                placeholderTextColor="#8C92D9"
+                autoCapitalize="none"
+              />
+            </View>
 
-        {/* Password Input */}
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            placeholder=""
-            placeholderTextColor="#8C92D9"
-            secureTextEntry
-          />
-        </View>
+            {/* Password Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                placeholder=""
+                placeholderTextColor="#8C92D9"
+                secureTextEntry
+              />
+            </View>
 
-        {/* Log In Button */}
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => router.replace("/(tabs)")}
-        >
-          <Text style={styles.loginButtonText}>Log In</Text>
-        </TouchableOpacity>
-      </View>
+            {/* Log In Button */}
+            <TouchableOpacity
+              style={[
+                styles.loginButton,
+                (!identifier || !password) && { opacity: 0.5 },
+              ]}
+              onPress={handleLogin}
+              disabled={!identifier || !password}>
+              <Text style={styles.loginButtonText}>Log In</Text>
+            </TouchableOpacity>
+          </View>
 
-      {/* Sign Up Link */}
-      <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>You don&apos;t have an account? </Text>
-        <TouchableOpacity onPress={() => router.push("/signup")}>
-          <Text style={styles.signupLink}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+          {/* Sign Up Link */}
+          <View style={styles.signupContainer}>
+            <Text style={styles.signupText}>
+              You don&apos;t have an account?{" "}
+            </Text>
+            <TouchableOpacity onPress={() => router.push("/signup")}>
+              <Text style={styles.signupLink}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
