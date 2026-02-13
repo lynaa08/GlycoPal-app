@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -26,28 +26,15 @@ const COLORS = {
   markDoneBg: "#479DFF",
   headerText: "#FFFFFF",
   lineColor: "#FFFFFF",
-  arrowBlue: "#479DFF", // Bleu pour la flèche };
-};
-const Dark__COLORS = {
-  background: "#90BBEA",
-  card: "#4C5EA2",
-  primary: "#FFFFFF",
-  accent: "#479DFF",
-  accentText: "#FFFFFF",
-  textPrimary: "#262626",
-  textSecondary: "#D8D8D8",
-  markDoneBg: "#479DFF",
-  headerText: "#FFFFFF",
-  lineColor: "#FFFFFF",
-  arrowBlue: "#262626", // Bleu pour la flèche
+  arrowBlue: "#479DFF", // Bleu pour la flèche
 };
 
 export default function NotificationsScreen() {
   const navigation = useNavigation();
 
-  const [fontsLoaded] = useFonts({
-    PixelifySans_600SemiBold,
-  });
+  // ─── HOOKS ───
+  const [fontsLoaded] = useFonts({ PixelifySans_600SemiBold });
+  const [doneIds, setDoneIds] = useState<number[]>([]); // store marked notifications
 
   if (!fontsLoaded) return null;
 
@@ -58,59 +45,67 @@ export default function NotificationsScreen() {
     { id: 4, title: "Reminder", message: "Tomorrow is your appointment" },
   ];
 
+  const handleMarkDone = (id: number) => {
+    if (!doneIds.includes(id)) {
+      setDoneIds([...doneIds, id]);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {/* Header */}
+      {/* HEADER */}
       <View style={styles.header}>
-        {/* Row with arrow + title */}
         <View style={styles.headerRow}>
-          {/* Back Button avec < en BLEU et Pixel, -- en normal blanc */}
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => navigation.goBack()}>
-            <Text style={styles.backButtonText}>
-              <Text style={styles.pixelArrow}>{"<"}</Text>
-
-            </Text>
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.pixelArrow}>{"<"}</Text>
           </TouchableOpacity>
 
-          {/* Title - EN PIXELIFY SANS */}
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Notifications</Text>
-            {/* Ligne blanche TRÈS GRANDE */}
             <View style={styles.titleLine} />
           </View>
         </View>
       </View>
 
-      {/* Notifications list */}
+      {/* NOTIFICATIONS LIST */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {notifications.map((item) => (
-          <View key={item.id} style={styles.notificationCard}>
-            <View style={styles.topRow}>
-              <Feather
-                name="bell"
-                size={16}
-                color={COLORS.primary}
-                style={styles.titleIcon}
-              />
-              <Text style={styles.notificationTitle}>{item.title}</Text>
+        {notifications.map((item) => {
+          const isDone = doneIds.includes(item.id);
+          return (
+            <View key={item.id} style={styles.notificationCard}>
+              <View style={styles.topRow}>
+                <Feather
+                  name="bell"
+                  size={16}
+                  color={COLORS.primary}
+                  style={styles.titleIcon}
+                />
+                <Text style={styles.notificationTitle}>{item.title}</Text>
+              </View>
+
+              <Text style={styles.notificationMessage}>{item.message}</Text>
+
+              <TouchableOpacity
+                style={[
+                  styles.markButton,
+                  { backgroundColor: isDone ? "#3A3A6A" : COLORS.markDoneBg },
+                ]}
+                disabled={isDone}
+                onPress={() => handleMarkDone(item.id)}
+              >
+                <Text style={styles.markButtonText}>
+                  {isDone ? "Done" : "Mark as done"}
+                </Text>
+                <Feather name="check" size={14} color={COLORS.accentText} />
+              </TouchableOpacity>
             </View>
+          );
+        })}
 
-            <Text style={styles.notificationMessage}>{item.message}</Text>
-
-            <TouchableOpacity style={styles.markButton}>
-              <Text style={styles.markButtonText}>Mark as done</Text>
-              <Feather
-                name="check"
-                size={14}
-                color={COLORS.accentText}
-              />
-            </TouchableOpacity>
-          </View>
-        ))}
-
-        {/* Footer - EN PIXELIFY SANS */}
+        {/* FOOTER */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Keep tracking your advancement</Text>
         </View>
@@ -120,22 +115,9 @@ export default function NotificationsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
-
-  header: {
-    paddingTop: 60,
-    paddingBottom: 20,
-  },
-
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-
+  container: { flex: 1, backgroundColor: COLORS.background },
+  header: { paddingTop: 60, paddingBottom: 20 },
+  headerRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20 },
   backButton: {
     width: 45,
     height: 45,
@@ -148,114 +130,27 @@ const styles = StyleSheet.create({
     zIndex: 10,
     top: -5,
   },
-
-  backButtonText: {
-    fontSize: 20,
-    color: COLORS.headerText,
-  },
-
-  // < en Pixelify Sans et BLEU
   pixelArrow: {
     fontFamily: "PixelifySans_600SemiBold",
     fontSize: 24,
-    color: COLORS.arrowBlue, // 🔵 BLEU
-  },
-
-  // -- en police normale (PAS pixel) et BLEU
-  normalDash: {
-    fontSize: 20,
     color: COLORS.arrowBlue,
-    // fontFamily omitted to use default system font
   },
-
-  titleContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-
-  // NOTIFICATIONS EN PIXELIFY SANS
+  titleContainer: { flex: 1, alignItems: "center" },
   title: {
     fontSize: 28,
     color: COLORS.headerText,
     fontFamily: "PixelifySans_600SemiBold",
     marginBottom: 15,
   },
-
-  // Ligne blanche TRÈS GRANDE
-  titleLine: {
-    width: 220,
-    height: 2,
-    backgroundColor: COLORS.lineColor,
-    marginTop: 3,
-    borderRadius: 2,
-  },
-
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-
-  notificationCard: {
-    backgroundColor: COLORS.card,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-  },
-
-  topRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-
-  titleIcon: {
-    marginRight: 8,
-  },
-
-  notificationTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: COLORS.textPrimary,
-  },
-
-  notificationMessage: {
-    fontSize: 15,
-    color: COLORS.textSecondary,
-    marginBottom: 12,
-    marginLeft: 24,
-  },
-
-  markButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "flex-start",
-    backgroundColor: COLORS.markDoneBg,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    marginLeft: 24,
-  },
-
-  markButtonText: {
-    fontSize: 12,
-    color: COLORS.accentText,
-    fontWeight: "400",
-    marginRight: 4,
-  },
-
-  footer: {
-    alignItems: "center",
-    paddingVertical: 30,
-  },
-
-  // KEEP TRACKING EN PIXELIFY SANS
-  footerText: {
-    textAlign: "center",
-    alignContent: "center",
-    alignItems: "center",
-    fontSize: 32,
-    color: COLORS.headerText,
-    fontFamily: "PixelifySans_600SemiBold",
-  },
+  titleLine: { width: 220, height: 2, backgroundColor: COLORS.lineColor, marginTop: 3, borderRadius: 2 },
+  content: { flex: 1, paddingHorizontal: 20, paddingTop: 20 },
+  notificationCard: { backgroundColor: COLORS.card, borderRadius: 12, padding: 16, marginBottom: 12 },
+  topRow: { flexDirection: "row", alignItems: "center", marginBottom: 8 },
+  titleIcon: { marginRight: 8 },
+  notificationTitle: { fontSize: 16, fontWeight: "600", color: COLORS.textPrimary },
+  notificationMessage: { fontSize: 15, color: COLORS.textSecondary, marginBottom: 12, marginLeft: 24 },
+  markButton: { flexDirection: "row", alignItems: "center", alignSelf: "flex-start", paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, marginLeft: 24 },
+  markButtonText: { fontSize: 12, color: COLORS.accentText, fontWeight: "400", marginRight: 4 },
+  footer: { alignItems: "center", paddingVertical: 30 },
+  footerText: { textAlign: "center", fontSize: 32, color: COLORS.headerText, fontFamily: "PixelifySans_600SemiBold" },
 });
