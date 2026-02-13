@@ -23,7 +23,7 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.smallStarBox}>
-            <Ionicons name="star" size={16} color="#FFD84D" />
+            <Ionicons name="star" size={16} color="#cfa91d" />
           </View>
           <View>
             <Text style={styles.title}>
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
 
   startButton: {
     marginTop: 30,
-    backgroundColor: "#E6D98D",
+    backgroundColor: "#f0c22d",
     padding: 22,
     borderRadius: 30,
     flexDirection: "row",

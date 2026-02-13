@@ -56,7 +56,7 @@ export default function Home() {
         </View>
 
         <View style={styles.badge}>
-          <Text style={{ color: Colors.green, fontWeight: "bold" }}>
+          <Text style={{ color: Colors.green, fontFamily: "PixelifySans_400Regular" }}>
             6.2%
           </Text>
         </View>
@@ -130,12 +130,13 @@ const styles = StyleSheet.create({
   appointmentTitle: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "PixelifySans_600SemiBold",
   },
 
   appointmentSubtitle: {
     color: Colors.subText,
     marginTop: 6,
+    fontFamily: "PixelifySans_400Regular",
   },
 
   row: {
@@ -153,17 +154,21 @@ const styles = StyleSheet.create({
 
   statTitle: {
     color: Colors.subText,
+    fontFamily: "PixelifySans_400Regular",
     fontSize: 12,
   },
 
   statValue: {
     fontSize: 30,
     color: Colors.green,
+    fontFamily: "PixelifySans_600SemiBold",
     marginTop: 10,
   },
 
   unit: {
     color: Colors.subText,
+    fontFamily: "PixelifySans_400Regular",
+    paddingLeft: 6,
   },
 
   hba1cCard: {
@@ -178,15 +183,18 @@ const styles = StyleSheet.create({
 
   hba1cTitle: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "PixelifySans_600SemiBold",
+    fontSize: 16,
   },
 
   hba1cSub: {
     color: Colors.subText,
     fontSize: 12,
+    fontFamily: "PixelifySans_400Regular",
   },
 
   badge: {
+    fontFamily: "PixelifySans_600SemiBold",
     borderColor: Colors.green,
     borderWidth: 2,
     paddingHorizontal: 12,
@@ -197,7 +205,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "PixelifySans_600SemiBold",
     marginBottom: 15,
   },
 
@@ -209,8 +217,9 @@ const styles = StyleSheet.create({
   },
 
   bigNumber: {
-    fontSize: 28,
+    fontSize: 32,
     color: "white",
+    fontFamily: "PixelifySans_600SemiBold",
     marginTop: 5,
   },
 
@@ -222,6 +231,7 @@ const styles = StyleSheet.create({
   },
 
   smallCardText: {
+    fontFamily: "PixelifySans_400Regular",
     color: "white",
     fontSize: 12,
   },
@@ -229,7 +239,7 @@ const styles = StyleSheet.create({
   smallNumber: {
     color: "white",
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "PixelifySans_600SemiBold",
     marginTop: 5,
   },
 });
