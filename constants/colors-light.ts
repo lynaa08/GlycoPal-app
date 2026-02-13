@@ -1,11 +1,11 @@
 // 🎨 COULEURS MODE LIGHT - DESIGN EXACT
 export const colors = {
-  background: '#76a3d3ff',     // Gris clair - fond page
-  card: '#7585c5ff',           // Blanc - fond tableau
+  background: '#699bd1ff',     // Gris clair - fond page
+  card: '#6f83d6ff',           // Blanc - fond tableau
   border: '#000000',         // Bleu clair - bordures
   primary: '#1E4E86',        // Bleu foncé - status
   secondary: '#1E4E86',      // Bleu violet - en-tête
-  accent: '#479DFF',         // Bleu vif (liens, boutons)
+  accent: '#0c67ceff',         // Bleu vif (liens, boutons)
   textPrimary: '#262626',    // Gris foncé - titres
   textSecondary: '#D8D8D8',  // Noir - texte normal
   settings: '#4C5EA2',       // Bleu violet - bouton settings

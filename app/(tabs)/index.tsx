@@ -37,7 +37,7 @@ export default function HomeScreen() {
         </View>
 
         <TouchableOpacity style={[styles.themeButton, { backgroundColor: colors.secondary }]} onPress={toggleTheme}>
-          <Ionicons name={isDarkMode ? "sunny" : "moon"} size={20} color="white" />
+          <Ionicons name={isDarkMode ? "sunny" : "moon"} size={20} color={colors.textPrimary} />
         </TouchableOpacity>
       </View>
 
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
 
   startButton: {
     marginTop: 30,
-    backgroundColor: "#E6D98D",
+    backgroundColor: "#dba541ff",
     padding: 22,
     borderRadius: 30,
     flexDirection: "row",
