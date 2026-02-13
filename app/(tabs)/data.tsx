@@ -13,14 +13,14 @@ const mealTypes = ["All meals", "Breakfast", "Lunch", "Snack", "Dinner"];
 
 // Sample glucose data for demonstration
 const glucoseData = [
-  { value: 120, isHyper: false },
-  { value: 180, isHyper: false },
-  { value: 140, isHyper: false },
-  { value: 160, isHyper: false },
-  { value: 190, isHyper: false },
-  { value: 220, isHyper: true },
-  { value: 150, isHyper: false },
-  { value: 130, isHyper: false },
+  { value: 120, isHyper: false, isHypo: false },
+  { value: 180, isHyper: false, isHypo: false },
+  { value: 140, isHyper: false, isHypo: false },
+  { value: 160, isHyper: false, isHypo: false },
+  { value: 190, isHyper: false, isHypo: false },
+  { value: 220, isHyper: true, isHypo: false },
+  { value: 150, isHyper: false, isHypo: false },
+  { value: 130, isHyper: false, isHypo: false },
 ];
 
 export default function DataVisualizationScreen() {
@@ -347,14 +347,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     borderTopWidth: 2,
-    borderTopColor: "#f72a2a",
+    borderTopColor: "#FF8C42",
     borderStyle: "dashed",
   },
   hyperText: {
     position: "absolute",
     left: 10,
     top: -20,
-    color: "#f72a2a",
+    color: "#FF8C42",
     fontSize: 10,
     fontFamily: "PixelifySans_400Regular",
   },
@@ -363,14 +363,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     borderTopWidth: 2,
-    borderTopColor: "#FF8C42",
+    borderTopColor: "#f72a2a",
     borderStyle: "dashed",
   },
   hypoText: {
     position: "absolute",
     left: 10,
     top: 5,
-    color: "#FF8C42",
+    color: "#f72a2a",
     fontSize: 10,
     fontFamily: "PixelifySans_400Regular",
   },
