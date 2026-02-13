@@ -33,8 +33,8 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.themeButton}>
-          <Ionicons name="sunny" size={20} color="#4DA6FF" />
+        <TouchableOpacity style={styles.settingsBtn}>
+          <Ionicons name="settings-outline" size={20} color="#4DA6FF" />
         </TouchableOpacity>
       </View>
 
@@ -192,8 +192,8 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  themeButton: {
-    backgroundColor: "#11154d",
+  settingsBtn: {
+    backgroundColor: "#11154D",
     padding: 12,
     borderRadius: 30,
   },

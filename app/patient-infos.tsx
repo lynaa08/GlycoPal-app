@@ -1,12 +1,13 @@
- import {
+import {
   PixelifySans_400Regular,
   PixelifySans_600SemiBold,
   PixelifySans_700Bold,
   useFonts,
 } from "@expo-google-fonts/pixelify-sans";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -20,15 +21,21 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
-} from "react-native";
-
+  View,} from "react-native";
 // Generate options for dropdowns
 const generateDays = () =>
   Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 const generateMonths = () =>
   Array.from({ length: 12 }, (_, i) => (i + 1).toString());
-const generateYears = () => Array.from({ length: 100 }, (_, i) => i.toString());
+const generateYears = () => {
+  const startYear = 1926;
+  const endYear = 2026;
+  const years = [];
+  for (let y = startYear; y <= endYear; y++) {
+    years.push(y.toString());
+  }
+  return years;
+};
 
 export default function PatientInfosScreen() {
   const [age, setAge] = useState("");
@@ -57,6 +64,17 @@ export default function PatientInfosScreen() {
     PixelifySans_600SemiBold,
     PixelifySans_700Bold,
   });
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("@patientData");
+        console.log("Patient Data:", jsonValue);
+      } catch (e) {
+        console.log("Error reading patient data:", e);
+      }
+    };
+    loadData();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
@@ -107,7 +125,7 @@ export default function PatientInfosScreen() {
       </View>
     </Modal>
   );
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (
       !age ||
       !type ||
@@ -122,7 +140,25 @@ export default function PatientInfosScreen() {
       Alert.alert("Incomplete form", "Please fill all required fields");
       return;
     }
-    router.replace("/(tabs)");
+
+    // Prepare the data object
+    const patientData = {
+      age,
+      type,
+      gender,
+      height,
+      weight,
+      bloodSugar,
+      diabetesDuration,
+    };
+
+    try {
+      // Save data locally on device
+      await AsyncStorage.setItem("@patientData", JSON.stringify(patientData));
+      router.replace("/(tabs)"); // navigate to main app
+    } catch (e) {
+      Alert.alert("Error", "Could not save data locally");
+    }
   };
 
   return (
