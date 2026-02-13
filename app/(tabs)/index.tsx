@@ -1,95 +1,324 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import {
+  PixelifySans_600SemiBold,
+  useFonts,
+} from "@expo-google-fonts/pixelify-sans";
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Svg, { Line } from "react-native-svg";
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.MenuAction
-              title="Delete"
-              icon="trash"
-              destructive
-              onPress={() => alert('Delete pressed')}
-            />
-          </Link.Preview>
-        </Link>
+  // Load Pixelify Sans font
+  let [fontsLoaded] = useFonts({
+    PixelifySans_600SemiBold,
+  });
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  if (!fontsLoaded) {
+    return null; // You can put a loading spinner here if you want
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* HEADER */}
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <View style={styles.smallStarBox}>
+            <Ionicons name="star" size={16} color="#FFD84D" />
+          </View>
+          <View>
+            <Text style={styles.title}>
+              Glyco<Text style={{ color: "#4DA6FF" }}>Pal</Text>
+            </Text>
+            <Text style={styles.level}>Level 4</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.settingsBtn}>
+          <Ionicons name="settings-outline" size={20} color="#4DA6FF" />
+        </TouchableOpacity>
+      </View>
+
+      {/* CONSTELLATION CARD */}
+      <View style={styles.card}>
+        <View style={styles.constellationContainer}>
+          <Svg height="100%" width="100%" style={StyleSheet.absoluteFill}>
+            {/* Yellow chain */}
+            <Line
+              x1="40"
+              y1="135"
+              x2="90"
+              y2="115"
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+            <Line
+              x1="90"
+              y1="115"
+              x2="140"
+              y2="150"
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+            <Line
+              x1="140"
+              y1="150"
+              x2="185"
+              y2="110"
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+            <Line
+              x1="185"
+              y1="110"
+              x2="220"
+              y2="125"
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+            {/* Yellow → First Grey */}
+            <Line
+              x1="220"
+              y1="125"
+              x2="255"
+              y2="110"
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+            {/* First Grey → Last Grey */}
+            <Line
+              x1="255"
+              y1="110"
+              x2="285"
+              y2="95"
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+            {/* Last Grey → Moon */}
+            <Line
+              x1={285 - 10} // move start 10px left
+              y1={95}
+              x2={315 - 10} // move end 10px left
+              y2={60}
+              stroke="#8C92D9"
+              strokeWidth="1.5"
+              strokeDasharray="3,4"
+            />
+          </Svg>
+
+          {/* ⭐ Yellow Stars */}
+          <View style={[styles.starSmall, { left: 40, top: 135 }]} />
+          <View style={[styles.starSmall, { left: 90, top: 115 }]} />
+          <View style={[styles.starLarge, { left: 140, top: 150 }]} />
+          <View style={[styles.starSmall, { left: 185, top: 110 }]} />
+          <View style={[styles.starSmall, { left: 220, top: 125 }]} />
+
+          {/* ▫️ First Grey */}
+          <View style={[styles.starGreySmall, { left: 255, top: 110 }]} />
+
+          {/* ▫️ Last Grey (LEFT of Moon) */}
+          <View style={[styles.starGreySmall, { left: 285, top: 95 }]} />
+
+          {/* 🌙 Moon */}
+          <View style={styles.moon} />
+        </View>
+
+        <View style={styles.constellationLabel}>
+          <Text style={styles.pixelSmall}>THE BIG DIPPER</Text>
+        </View>
+      </View>
+
+      {/* STARS COUNT */}
+      <View style={styles.starsSection}>
+        <Text style={styles.pixelBig}>12 Stars</Text>
+        <Text style={styles.pixelSmall}>TOTAL FOUND</Text>
+      </View>
+
+      {/* LOCKED CARD */}
+      <View style={styles.lockedCard}>
+        <Ionicons name="lock-closed-outline" size={26} color="#0B0F3A" />
+        <Text style={styles.pixelDark}>Continue to unlock it</Text>
+      </View>
+
+      {/* START BUTTON */}
+      <TouchableOpacity style={styles.startButton}>
+        <Ionicons name="add-circle" size={20} color="black" />
+        <Text style={styles.pixelButton}>START LOG</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#04082A",
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  header: {
+    marginTop: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  smallStarBox: {
+    backgroundColor: "#11154D",
+    padding: 10,
+    borderRadius: 12,
+  },
+
+  title: {
+    fontSize: 22,
+    color: "white",
+    fontFamily: "PixelifySans_600SemiBold",
+  },
+
+  level: {
+    color: "#A0A4C0",
+    fontFamily: "PixelifySans_600SemiBold",
+    marginTop: 4,
+  },
+
+  settingsBtn: {
+    backgroundColor: "#11154D",
+    padding: 12,
+    borderRadius: 30,
+  },
+
+  card: {
+    backgroundColor: "#1A1F5A",
+    height: 250,
+    borderRadius: 30,
+    marginTop: 30,
+    padding: 20,
+    justifyContent: "space-between",
+  },
+
+  constellationContainer: {
+    flex: 1,
+    position: "relative",
+  },
+
+  starSmall: {
+    position: "absolute",
+    width: 16,
+    height: 16,
+    backgroundColor: "#FFD84D",
+    borderRadius: 4,
+    shadowColor: "#FFD84D",
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 10,
+  },
+
+  starLarge: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    backgroundColor: "#FFD84D",
+    borderRadius: 6,
+    shadowColor: "#FFD84D",
+    shadowOpacity: 1,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 18,
+  },
+
+  starGreySmall: {
+    position: "absolute",
+    width: 14,
+    height: 14,
+    backgroundColor: "#6E74A6",
+    borderRadius: 4,
+    opacity: 0.7,
+  },
+
+  moon: {
+    position: "absolute",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#E6E6E6",
+    top: 25,
+    left: 245,
+    // move it horizontally inside the card
+    shadowColor: "#FFFFFF",
+    shadowOpacity: 0.6,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 0 },
+  },
+
+  constellationLabel: {
+    alignSelf: "center",
+    backgroundColor: "#413D67",
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 40,
+    justifyContent: "space-between",
+    top: 45,
+  },
+
+  starsSection: {
+    alignItems: "center",
+    marginTop: 30,
+  },
+
+  lockedCard: {
+    backgroundColor: "#5A6AB0",
+    marginTop: 30,
+    borderRadius: 25,
+    padding: 30,
+    alignItems: "center",
+  },
+
+  startButton: {
+    marginTop: 30,
+    backgroundColor: "#E6D98D",
+    padding: 22,
+    borderRadius: 30,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  /* PIXEL TEXT */
+  pixelBig: {
+    fontSize: 38,
+    color: "#4DA6FF",
+    fontFamily: "PixelifySans_600SemiBold",
+  },
+
+  pixelSmall: {
+    fontSize: 12,
+    color: "#B8C1FF",
+    fontFamily: "PixelifySans_600SemiBold",
+    letterSpacing: 2,
+  },
+
+  pixelDark: {
+    marginTop: 10,
+    color: "#0B0F3A",
+    fontFamily: "PixelifySans_600SemiBold",
+  },
+
+  pixelButton: {
+    fontSize: 18,
+    fontFamily: "PixelifySans_600SemiBold",
+    fontWeight: "bold",
   },
 });
