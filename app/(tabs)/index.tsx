@@ -42,7 +42,7 @@ export default function HomeScreen() {
       </View>
 
       {/* CONSTELLATION CARD */}
-      <View style={[styles.card, { backgroundColor: colors.card }]}>
+      <View style={[styles.card, { backgroundColor: colors.secondary }]}>
         <View style={styles.constellationContainer}>
           <Svg height="100%" width="100%" style={StyleSheet.absoluteFill}>
             {/* Yellow chain */}
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#1A1F5A",
     height: 250,
-    borderRadius: 30,
+    borderRadius: 25,
     marginTop: 30,
     padding: 20,
     justifyContent: "space-between",

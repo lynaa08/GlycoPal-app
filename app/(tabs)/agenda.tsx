@@ -105,7 +105,7 @@ export default function AgendaScreen() {
               <View style={[styles.verticalLine, { backgroundColor: colors.border }]} />
               <Text style={[styles.cell, styles.cellStatus, { color: colors.textSecondary }]}>{row.status}</Text>
               <View style={[styles.verticalLine, { backgroundColor: colors.border }]} />
-              <Text style={[styles.cell, styles.cellNotify, { color: colors.textSecondary }]} numberOfLines={1}>
+              <Text style={[styles.cell, styles.cellNotify, { color: colors.textSecondary }]}>
                 {row.message}
               </Text>
               <View style={[styles.verticalLine, { backgroundColor: colors.border }]} />
