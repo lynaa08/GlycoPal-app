@@ -31,7 +31,7 @@ export default function AgendaScreen() {
           <Text style={styles.subtitle}>Daily Behaviour</Text>
         </View>
         {/* 🔥 BOUTON SETTINGS AJOUTÉ ICI */}
-        <TouchableOpacity style={styles.settingsBtn}>
+        <TouchableOpacity style={styles.themeButton}>
           <Ionicons name="moon" size={22} color="white" />
         </TouchableOpacity>
       </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     fontFamily: 'PixelifySans_700Bold',
     color: '#262626',
   },
-  settingsBtn: {
+  themeButton: {
     position: 'absolute',
     right: 16,
     backgroundColor: "#4C5EA2",
