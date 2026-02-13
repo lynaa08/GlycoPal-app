@@ -1,5 +1,5 @@
 // 🎨 COULEURS MODE LIGHT - DESIGN EXACT
-export const COLORS = {
+export const colors = {
   background: '#90BBEA',     // Gris clair - fond page
   card: '#616FA6',           // Blanc - fond tableau
   border: '#000000',         // Bleu clair - bordures
@@ -10,4 +10,4 @@ export const COLORS = {
   settings: '#4C5EA2',       // Bleu violet - bouton settings
 } as const;
 
-export default COLORS;
+export default colors;
