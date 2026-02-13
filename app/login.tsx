@@ -1,138 +1,188 @@
-/* eslint-disable react/no-unescaped-entities */
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { router } from 'expo-router';
-import { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import { router } from "expo-router";
+import { useState } from "react";
+import {
+  PixelifySans_400Regular,
+  PixelifySans_600SemiBold,
+  PixelifySans_700Bold,
+  useFonts,
+} from "@expo-google-fonts/pixelify-sans";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Load Pixelify Sans font
+  let [fontsLoaded] = useFonts({
+    PixelifySans_400Regular,
+    PixelifySans_600SemiBold,
+    PixelifySans_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.welcomeText}>Welcome To</Text>
-        <Text style={styles.appName}>GlycoPal</Text>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+      {/* Logo */}
+      <View style={styles.logoContainer}>
+        <Text style={styles.logo}>
+          Log <Text style={styles.logoBlue}>In</Text>
+        </Text>
       </View>
 
+      {/* Form */}
       <View style={styles.form}>
-        <Text style={styles.title}>Log In</Text>
-
+        {/* Identifier Input */}
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Emailaddress</Text>
+          <Text style={styles.label}>Identifier</Text>
           <TextInput
             style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="Enter your email"
-            keyboardType="email-address"
+            value={identifier}
+            onChangeText={setIdentifier}
+            placeholder=""
+            placeholderTextColor="#8C92D9"
             autoCapitalize="none"
           />
         </View>
 
+        {/* Password Input */}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
           <TextInput
             style={styles.input}
             value={password}
             onChangeText={setPassword}
-            placeholder="Enter your password"
+            placeholder=""
+            placeholderTextColor="#8C92D9"
             secureTextEntry
           />
         </View>
 
-        {/* Next button that takes you to index (main tabs) */}
-        <TouchableOpacity 
-          style={styles.loginButton} 
-          onPress={() => router.replace('/(tabs)')}
+        {/* Log In Button */}
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => router.replace("/(tabs)")}
         >
-          <Text style={styles.loginButtonText}>Next</Text>
+          <Text style={styles.loginButtonText}>Log In</Text>
         </TouchableOpacity>
-
-        {/* Sign up text that takes you to signup page */}
-        <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>You don't have an account? </Text>
-          <TouchableOpacity onPress={() => router.push('/signup')}>
-            <Text style={styles.signupLink}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
       </View>
-    </View>
+
+      {/* Sign Up Link */}
+      <View style={styles.signupContainer}>
+        <Text style={styles.signupText}>You don&apos;t have an account? </Text>
+        <TouchableOpacity onPress={() => router.push("/signup")}>
+          <Text style={styles.signupLink}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#04082A", // Dark navy blue background
   },
-  header: {
-    backgroundColor: '#2D5A27',
-    paddingVertical: 40,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 30,
+    paddingBottom: 40,
   },
-  welcomeText: {
-    color: '#fff',
-    fontSize: 16,
-    opacity: 0.9,
+  logoContainer: {
+    marginTop: 80,
+    marginBottom: 60,
+    alignItems: "center",
   },
-  appName: {
-    color: '#fff',
-    fontSize: 36,
-    fontFamily: 'PexelifySans',
-    marginTop: 5,
+  logo: {
+    fontSize: 64,
+    color: "#FFFFFF",
+    fontFamily: "PixelifySans_700Bold",
+    textAlign: "center",
+  },
+  logoBlue: {
+    color: "#4DA6FF", // Light blue for "In"
   },
   form: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#2D5A27',
-    marginBottom: 30,
+    marginBottom: 40,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: 30,
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 8,
+    fontSize: 16,
+    fontFamily: "PixelifySans_600SemiBold",
+    color: "#FFFFFF",
+    marginBottom: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-    padding: 12,
+    backgroundColor: "#1A1F5A", // Dark purple-blue input background
+    borderRadius: 12,
+    padding: 18,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    fontFamily: "PixelifySans_400Regular",
+    color: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#2A2F6A",
   },
   loginButton: {
-    backgroundColor: '#2D5A27',
-    padding: 16,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 20,
+    backgroundColor: "#4DA6FF", // Light blue button
+    padding: 20,
+    borderRadius: 30,
+    alignItems: "center",
+    marginTop: 40,
+    shadowColor: "#4DA6FF",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   loginButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    color: "#FFFFFF", // White text on button
+    fontSize: 22,
+    fontFamily: "PixelifySans_700Bold",
   },
   signupContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 25,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    paddingBottom: 20,
   },
   signupText: {
-    color: '#666',
+    color: "#B8C1FF", // Light purple-blue text
     fontSize: 14,
+    fontFamily: "PixelifySans_400Regular",
   },
   signupLink: {
-    color: '#2D5A27',
+    color: "#4DA6FF", // Light blue link
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: "PixelifySans_700Bold",
   },
 });

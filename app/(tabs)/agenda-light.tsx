@@ -3,6 +3,7 @@ import { PixelifySans_400Regular, PixelifySans_700Bold, useFonts } from '@expo-g
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+
 const dailyData = [
   { date: '09/02', status: 'Great Effe', message: 'Celebrate when you do well 😊', average: '8/1 avg.', bg: '#FFFFFF' },
   { date: '10/02', status: 'Almost There', message: 'Your message was strong, but not too long 😍😍😍', average: '9/1 avg.', bg: '#FFFFFF' },
@@ -38,7 +39,7 @@ export default function AgendaScreen() {
           {/* 🔵 LIGNE HORIZONTALE AJOUTÉE ICI */}
       <View style={styles.divider} />
 
-      {/* TABLE HEADER - PREMIÈRE LIGNE COLORÉE */}
+
       <View style={styles.tableHeader}>
         <Text style={[styles.headerText, styles.headerDate]}>Date</Text>
         <View style={styles.verticalLine} />

@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../../constants/colors";
 
 export default function Home() {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 120 }}
+      contentContainerStyle={{ paddingBottom: 20 }}
     >
       {/* Header */}
       <View style={styles.header}>
@@ -14,9 +14,9 @@ export default function Home() {
           Glyco<Text style={{ color: Colors.primary }}>Pal</Text>
         </Text>
 
-        <View style={styles.settingsBtn}>
-          <Ionicons name="settings-outline" size={22} color="white" />
-        </View>
+        <TouchableOpacity style={styles.themeButton}>
+          <Ionicons name="sunny" size={22} color="white" />
+        </TouchableOpacity>
       </View>
 
       {/* Appointment */}
@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: 20,
+    paddingTop: 60,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
 
   header: {
@@ -105,14 +107,16 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: "PixelifySans_600SemiBold",
+    fontSize: 32,
     color: "white",
   },
 
-  settingsBtn: {
-    backgroundColor: Colors.card,
-    padding: 10,
+  themeButton: {
+    position: 'absolute',
+    right: 16,
+    backgroundColor: "#4C5EA2",
+    padding: 12,
     borderRadius: 50,
   },
 

@@ -1,3 +1,4 @@
+import { router } from 'expo-router'
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -34,11 +35,11 @@ export default function Profile() {
       <Item title="Compte" icon="person-outline" />
       <Item title="Language" icon="language-outline" />
       <Item title="Export Medical Data" icon="paper-plane-outline" />
-      <Item title="Notifications" icon="notifications-outline" />
+      <Item title="Notifications" icon="notifications-outline"  onPress={() => router.push('/notifications')} />
       <Item title="Change the game" icon="game-controller-outline" />
       <Item title="Delete the compte" icon="trash-outline" />
       <Item title="Signaler un bug" icon="bug-outline" />
-      <Item title="Sign Out" icon="log-out-outline" />
+      <Item title="Sign Out" icon="log-out-outline" onPress={() => router.push('/login')}/>
     </View>
   );
 }
