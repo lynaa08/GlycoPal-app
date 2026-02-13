@@ -6,7 +6,7 @@ import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Text } from 'react-native';
+
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -54,28 +54,22 @@ export default function TabLayout() {
         }}
       />
     
+          <Tabs.Screen
+            name="agenda-light"
+            options={{
+              title: "Agenda",
+              tabBarIcon: ({ color }) => (
+                <Feather name="calendar" size={24} color={color} />
+              ),
+            }}
+          />
+
       <Tabs.Screen
-        name="agenda"
-        options={{
-          title: 'Agenda',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color }}></Text>,
-      }}
-      />
-      <Tabs.Screen
-        name="explore"
+        name="notifications"
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => (
             <Feather name="user" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="agenda"
-        options={{
-          title: "Agenda",
-          tabBarIcon: ({ color }) => (
-            <Feather name="calendar" size={24} color={color} />
           ),
         }}
       />
