@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
@@ -9,28 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { useTheme } from '@/context/ThemeContext';
 import {
   PixelifySans_600SemiBold,
   useFonts,
 } from "@expo-google-fonts/pixelify-sans";
 
-const COLORS = {
-  background: "#04031D",
-  card: "#1E1A3B",
-  primary: "#FFFFFF",
-  accent: "#479DFF",
-  accentText: "#FFFFFF",
-  textPrimary: "#D8D8D8",
-  textSecondary: "#D8D8D8",
-  markDoneBg: "#479DFF",
-  headerText: "#FFFFFF",
-  lineColor: "#FFFFFF",
-  arrowBlue: "#479DFF", // Bleu pour la flèche
-};
-
 export default function NotificationsScreen() {
   const navigation = useNavigation();
+  const { colors, isDarkMode } = useTheme();
 
   // ─── HOOKS ───
   const [fontsLoaded] = useFonts({ PixelifySans_600SemiBold });
@@ -107,7 +93,7 @@ export default function NotificationsScreen() {
 
         {/* FOOTER */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Keep tracking your advancement</Text>
+          <Text style={[styles.footerText, { color: colors.primary }]}>Keep tracking your advancement</Text>
         </View>
       </ScrollView>
     </View>
@@ -122,7 +108,6 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 25,
-    backgroundColor: "#1A1F4B",
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
@@ -138,7 +123,6 @@ const styles = StyleSheet.create({
   titleContainer: { flex: 1, alignItems: "center" },
   title: {
     fontSize: 28,
-    color: COLORS.headerText,
     fontFamily: "PixelifySans_600SemiBold",
     marginBottom: 15,
   },

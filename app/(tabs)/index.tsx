@@ -1,3 +1,4 @@
+import { useTheme } from '@/context/ThemeContext';
 import {
   PixelifySans_600SemiBold,
   useFonts,
@@ -8,38 +9,40 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Line } from "react-native-svg";
 
 export default function HomeScreen() {
+  const { colors, isDarkMode, toggleTheme } = useTheme();
+
   // Load Pixelify Sans font
   let [fontsLoaded] = useFonts({
     PixelifySans_600SemiBold,
   });
 
   if (!fontsLoaded) {
-    return null; // You can put a loading spinner here if you want
+    return null;
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* HEADER */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <View style={styles.smallStarBox}>
+          <View style={[styles.smallStarBox, { backgroundColor: colors.card }]}>
             <Ionicons name="star" size={16} color="#FFD84D" />
           </View>
           <View>
-            <Text style={styles.title}>
-              Glyco<Text style={{ color: "#4DA6FF" }}>Pal</Text>
+            <Text style={[styles.title, { color: colors.textPrimary }]}>
+              Glyco<Text style={{ color: colors.accent }}>Pal</Text>
             </Text>
-            <Text style={styles.level}>Level 4</Text>
+            <Text style={[styles.level, { color: colors.textSecondary }]}>Level 4</Text>
           </View>
         </View>
 
-        <TouchableOpacity style={styles.settingsBtn}>
-          <Ionicons name="settings-outline" size={20} color="#4DA6FF" />
+        <TouchableOpacity style={[styles.themeButton, { backgroundColor: colors.secondary }]} onPress={toggleTheme}>
+          <Ionicons name={isDarkMode ? "sunny" : "moon"} size={20} color={colors.textPrimary} />
         </TouchableOpacity>
       </View>
 
       {/* CONSTELLATION CARD */}
-      <View style={styles.card}>
+      <View style={[styles.card, { backgroundColor: colors.secondary }]}>
         <View style={styles.constellationContainer}>
           <Svg height="100%" width="100%" style={StyleSheet.absoluteFill}>
             {/* Yellow chain */}
@@ -101,9 +104,9 @@ export default function HomeScreen() {
             />
             {/* Last Grey → Moon */}
             <Line
-              x1={285 - 10} // move start 10px left
+              x1={285 - 10}
               y1={95}
-              x2={315 - 10} // move end 10px left
+              x2={315 - 10}
               y2={60}
               stroke="#8C92D9"
               strokeWidth="1.5"
@@ -128,21 +131,21 @@ export default function HomeScreen() {
           <View style={styles.moon} />
         </View>
 
-        <View style={styles.constellationLabel}>
+        <View style={[styles.constellationLabel, { backgroundColor: colors.secondary }]}>
           <Text style={styles.pixelSmall}>THE BIG DIPPER</Text>
         </View>
       </View>
 
       {/* STARS COUNT */}
       <View style={styles.starsSection}>
-        <Text style={styles.pixelBig}>12 Stars</Text>
+        <Text style={[styles.pixelBig, { color: colors.accent }]}>12 Stars</Text>
         <Text style={styles.pixelSmall}>TOTAL FOUND</Text>
       </View>
 
       {/* LOCKED CARD */}
-      <View style={styles.lockedCard}>
-        <Ionicons name="lock-closed-outline" size={26} color="#0B0F3A" />
-        <Text style={styles.pixelDark}>Continue to unlock it</Text>
+      <View style={[styles.lockedCard, { backgroundColor: colors.card }]}>
+        <Ionicons name="lock-closed-outline" size={26} color={colors.textPrimary} />
+        <Text style={[styles.pixelDark, { color: colors.textPrimary }]}>Continue to unlock it</Text>
       </View>
 
       {/* START BUTTON */}
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#1A1F5A",
     height: 250,
-    borderRadius: 30,
+    borderRadius: 25,
     marginTop: 30,
     padding: 20,
     justifyContent: "space-between",
@@ -255,7 +258,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#E6E6E6",
     top: 25,
     left: 245,
-    // move it horizontally inside the card
     shadowColor: "#FFFFFF",
     shadowOpacity: 0.6,
     shadowRadius: 20,
@@ -287,7 +289,7 @@ const styles = StyleSheet.create({
 
   startButton: {
     marginTop: 30,
-    backgroundColor: "#E6D98D",
+    backgroundColor: "#dba541ff",
     padding: 22,
     borderRadius: 30,
     flexDirection: "row",

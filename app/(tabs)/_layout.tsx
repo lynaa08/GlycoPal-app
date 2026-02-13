@@ -1,44 +1,30 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import {
-  PixelifySans_400Regular,
-  PixelifySans_500Medium,
-  PixelifySans_600SemiBold,
-  PixelifySans_700Bold,
-} from "@expo-google-fonts/pixelify-sans";
-import { useFonts } from "expo-font";
+import { HapticTab } from '@/components/haptic-tab';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { useTheme } from '@/context/ThemeContext';
+
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const [fontsLoaded] = useFonts({
-    PixelifySans_400Regular,
-    PixelifySans_500Medium,
-    PixelifySans_600SemiBold,
-    PixelifySans_700Bold,
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  const { colors } = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.tabIconDefault, // Use dynamic inactive color
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
-          backgroundColor: Colors[colorScheme ?? "light"].background,
-        },
-      }}>
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
+        }
+      }}
+    >
       <Tabs.Screen
-        name="agenda-light"
+        name="agenda"
         options={{
           title: "Agenda",
           tabBarIcon: ({ color }) => (
@@ -51,7 +37,7 @@ export default function TabLayout() {
         options={{
           title: "Logs",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="book" color={color} />
+            <Ionicons name="list" size={24} color={color} />
           ),
         }}
       />
@@ -70,7 +56,7 @@ export default function TabLayout() {
         options={{
           title: "Data visualization",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="checklist" color={color} />
+            <Ionicons name="stats-chart" size={24} color={color} />
           ),
         }}
       />
