@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: "PixelifySans_600SemiBold",
+    fontSize: 32,
     color: "white",
   },
 

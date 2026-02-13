@@ -23,20 +23,11 @@ export default function TabLayout() {
       }}
       >
       <Tabs.Screen
-        name="index"
+        name="agenda-light"
         options={{
-          title: "Home", // Changed from 'Home' to 'Dashboard'
+          title: "Agenda",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="data" // ADD THIS
-        options={{
-          title: "Data visualization",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="checklist" color={color} />
+            <Feather name="calendar" size={24} color={color} />
           ),
         }}
       />
@@ -46,23 +37,32 @@ export default function TabLayout() {
           title: "Logs",
           tabBarIcon: ({ color }) => (
             <IconSymbol
-              size={28}
-              name="chart.line.uptrend.xyaxis"
-              color={color}
+            size={24}
+            name="book"
+            color={color}
             />
           ),
         }}
       />
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home", // Changed from 'Home' to 'Dashboard'
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={24} name="house.fill" color={color} />
+            ),
+          }}
+        />
     
-          <Tabs.Screen
-            name="agenda-light"
-            options={{
-              title: "Agenda",
-              tabBarIcon: ({ color }) => (
-                <Feather name="calendar" size={24} color={color} />
-              ),
-            }}
-          />
+    <Tabs.Screen
+      name="data" // ADD THIS
+      options={{
+        title: "Data visualization",
+        tabBarIcon: ({ color }) => (
+          <IconSymbol size={24} name="checklist" color={color} />
+        ),
+      }}
+    />
 
       <Tabs.Screen
         name="profile"
