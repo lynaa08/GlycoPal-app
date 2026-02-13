@@ -15,7 +15,7 @@ export default function Home() {
         </Text>
 
         <TouchableOpacity style={styles.themeButton}>
-          <Ionicons name="moon" size={22} color="white" />
+          <Ionicons name="sunny" size={22} color="white" />
         </TouchableOpacity>
       </View>
 
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     paddingTop: 60,
-    paddingVertical: 20,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
 
   header: {
