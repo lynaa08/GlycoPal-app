@@ -1,23 +1,24 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import { router } from "expo-router";
-import { useState } from "react";
-import {
+ import {
   PixelifySans_400Regular,
   PixelifySans_600SemiBold,
   PixelifySans_700Bold,
   useFonts,
 } from "@expo-google-fonts/pixelify-sans";
+import { router } from "expo-router";
+import { useState } from "react";
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");
@@ -35,95 +36,105 @@ export default function SignupScreen() {
   if (!fontsLoaded) {
     return null;
   }
+  const handleNext = () => {
+    if (!email || !fullName || !phoneNumber || !password) {
+      Alert.alert("Please fill all fields");
+      return;
+    }
+    router.push("/patient-infos");
+  };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+      behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-        >
-        {/* Header with Logo */}
-        <View style={styles.header}>
-          <Text style={styles.logo}>
-            Sign <Text style={styles.logoBlue}>Up</Text>
-          </Text>
-        </View>
-
-        {/* Form Section */}
-        <View style={styles.form}>
-          {/* Email Input */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email address</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder=""
-              placeholderTextColor="#8C92D9"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+          showsVerticalScrollIndicator={false}>
+          {/* Header with Logo */}
+          <View style={styles.header}>
+            <Text style={styles.logo}>
+              Sign <Text style={styles.logoBlue}>Up</Text>
+            </Text>
           </View>
 
-          {/* Full Name Input */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Full name</Text>
-            <TextInput
-              style={styles.input}
-              value={fullName}
-              onChangeText={setFullName}
-              placeholder=""
-              placeholderTextColor="#8C92D9"
-            />
-          </View>
+          {/* Form Section */}
+          <View style={styles.form}>
+            {/* Email Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Email address</Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder=""
+                placeholderTextColor="#8C92D9"
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
 
-          {/* Phone Number Input */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Phone number</Text>
-            <TextInput
-              style={styles.input}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              placeholder=""
-              placeholderTextColor="#8C92D9"
-              keyboardType="phone-pad"
-            />
-          </View>
+            {/* Full Name Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Full name</Text>
+              <TextInput
+                style={styles.input}
+                value={fullName}
+                onChangeText={setFullName}
+                placeholder=""
+                placeholderTextColor="#8C92D9"
+              />
+            </View>
 
-          {/* Password Input */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              placeholder=""
-              placeholderTextColor="#8C92D9"
-              secureTextEntry
-            />
-          </View>
+            {/* Phone Number Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Phone number</Text>
+              <TextInput
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                placeholder=""
+                placeholderTextColor="#8C92D9"
+                keyboardType="phone-pad"
+              />
+            </View>
 
-          {/* Next Button */}
-          <TouchableOpacity
-            style={styles.nextButton}
-            onPress={() => router.push("/patient-infos")}
-          >
-            <Text style={styles.nextButtonText}>Next</Text>
-          </TouchableOpacity>
+            {/* Password Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                placeholder=""
+                placeholderTextColor="#8C92D9"
+                secureTextEntry
+              />
+            </View>
 
-          {/* Login Link */}
-          <View style={styles.loginContainer}>
-            <Text style={styles.loginText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => router.push("/login")}>
-              <Text style={styles.loginLink}>Log In</Text>
+            {/* Next Button */}
+            <TouchableOpacity
+              style={[
+                styles.nextButton,
+                (!email || !fullName || !phoneNumber || !password) && {
+                  opacity: 0.5,
+                },
+              ]}
+              disabled={!email || !fullName || !phoneNumber || !password}
+              onPress={handleNext}>
+              <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
+
+            {/* Login Link */}
+            <View style={styles.loginContainer}>
+              <Text style={styles.loginText}>Already have an account? </Text>
+              <TouchableOpacity onPress={() => router.push("/login")}>
+                <Text style={styles.loginLink}>Log In</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
