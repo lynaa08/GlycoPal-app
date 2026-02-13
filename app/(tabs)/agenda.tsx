@@ -50,10 +50,13 @@ export default function AgendaScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* LIGNE HORIZONTALE */}
+      <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
       {/* Date Range Dropdown */}
-      <View style={{ zIndex: 2000, paddingHorizontal: 16, marginBottom: 10 }}>
+      <View style={{ zIndex: 2000, alignItems: 'center', marginBottom: 10 }}>
         <TouchableOpacity
-          style={[styles.dropdownButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+          style={[styles.dropdownButton, { backgroundColor: colors.card, borderColor: colors.border, alignSelf: 'center' }]}
           onPress={() => setShowDropdown(!showDropdown)}
         >
           <Text style={[styles.dropdownButtonText, { color: colors.textSecondary }]}>Last {selectedRange}</Text>
@@ -78,9 +81,6 @@ export default function AgendaScreen() {
           </View>
         )}
       </View>
-
-      {/* LIGNE HORIZONTALE */}
-      <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
       {/* STICKY HEADER */}
       <View style={[styles.tableHeader, { backgroundColor: colors.background, borderColor: colors.border }]}>
@@ -121,7 +121,7 @@ export default function AgendaScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 60,
   },
   header: {
     position: 'relative',
