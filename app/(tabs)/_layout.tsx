@@ -1,91 +1,75 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { Dimensions } from "react-native";
+import React from "react";
 
-const { width } = Dimensions.get("window");
+import { HapticTab } from '@/components/haptic-tab';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
-export default function TabsLayout() {
+
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
+
   return (
     <Tabs
       screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarActiveTintColor: "#4DA6FF",
-        tabBarInactiveTintColor: "#8E8EAA",
-
+        tabBarButton: HapticTab,
         tabBarStyle: {
-          position: "absolute",
-
-          width: width * 0.9,
-          height: 75 ,
-
-          alignSelf: "center",
-
-         
-          bottom: 0,
-
-          backgroundColor: "#1E1A3B",
-          borderRadius: 60,
-
-          paddingVertical: 25,
-
-          borderTopWidth: 0,
-          elevation: 20,
-        },
-
-        tabBarLabelStyle: {
-          fontSize: 12,
-        },
+          backgroundColor: Colors[colorScheme ?? "light"].background,
+        }
       }}
-    >
-    
-
-
+      >
       <Tabs.Screen
-        name="home"
+        name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+          title: "Home", // Changed from 'Home' to 'Dashboard'
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="house.fill" color={color} />
           ),
         }}
       />
-
       <Tabs.Screen
-        name="agenda"
+        name="data" // ADD THIS
         options={{
-          title: "Agenda",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar" size={size} color={color} />
+          title: "Data visualization",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="checklist" color={color} />
           ),
         }}
       />
-
       <Tabs.Screen
-        name="logs"
+        name="logs" // ADD THIS
         options={{
           title: "Logs",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="list" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name="chart.line.uptrend.xyaxis"
+              color={color}
+            />
           ),
         }}
       />
-
-      <Tabs.Screen
-        name="data"
-        options={{
-          title: "Data",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="stats-chart" size={size} color={color} />
-          ),
-        }}
-      />
+    
+          <Tabs.Screen
+            name="agenda-light"
+            options={{
+              title: "Agenda",
+              tabBarIcon: ({ color }) => (
+                <Feather name="calendar" size={24} color={color} />
+              ),
+            }}
+          />
 
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Feather name="user" size={24} color={color} />
           ),
         }}
       />
