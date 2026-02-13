@@ -17,6 +17,7 @@ export default function Home() {
     >
       {/* Header */}
       <View style={styles.header}>
+        {" "}
         <Text style={styles.logo}>
           Glyco<Text style={{ color: colors.accent }}>Pal</Text>
         </Text>
@@ -151,9 +152,7 @@ export default function Home() {
         </View>
       </View>
     </ScrollView>
-  );
-}
-
+  );}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

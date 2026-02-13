@@ -195,8 +195,8 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  themeButton: {
-    backgroundColor: "#11154d",
+  settingsBtn: {
+    backgroundColor: "#11154D",
     padding: 12,
     borderRadius: 30,
   },
