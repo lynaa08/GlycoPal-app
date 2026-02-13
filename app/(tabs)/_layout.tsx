@@ -2,10 +2,11 @@ import { Feather } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { HapticTab } from '@/components/haptic-tab';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Text } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -16,7 +17,11 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme ?? "light"].background,
+        }
+      }}
+      >
       <Tabs.Screen
         name="index"
         options={{
@@ -50,7 +55,14 @@ export default function TabLayout() {
       />
     
       <Tabs.Screen
-        name="notifications"
+        name="agenda"
+        options={{
+          title: 'Agenda',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color }}></Text>,
+      }}
+      />
+      <Tabs.Screen
+        name="explore"
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => (
