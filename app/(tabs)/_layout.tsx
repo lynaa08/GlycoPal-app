@@ -20,25 +20,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard", // Changed from 'Home' to 'Dashboard'
+          title: "Home", // Changed from 'Home' to 'Dashboard'
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="tasks" // ADD THIS
+        name="data" // ADD THIS
         options={{
-          title: "Tasks",
+          title: "Data visualization",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="checklist" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="progress" // ADD THIS
+        name="logs" // ADD THIS
         options={{
-          title: "Progress",
+          title: "Logs",
           tabBarIcon: ({ color }) => (
             <IconSymbol
               size={28}
@@ -52,16 +52,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          title: "Notifs",
+          title: "Profile",
           tabBarIcon: ({ color }) => (
-            <Feather name="bell" size={24} color={color} />
+            <Feather name="user" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="agenda"
         options={{
-          title: "Appointment",
+          title: "Agenda",
           tabBarIcon: ({ color }) => (
             <Feather name="calendar" size={24} color={color} />
           ),

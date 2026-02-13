@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
@@ -69,7 +70,7 @@ export default function NotificationsScreen() {
             onPress={() => navigation.goBack()}>
             <Text style={styles.backButtonText}>
               <Text style={styles.pixelArrow}>{"<"}</Text>
-              <Text style={styles.normalDash}>{"--"}</Text>
+
             </Text>
           </TouchableOpacity>
 
@@ -101,7 +102,7 @@ export default function NotificationsScreen() {
             <TouchableOpacity style={styles.markButton}>
               <Text style={styles.markButtonText}>Mark as done</Text>
               <Feather
-                name="chevron-down"
+                name="check"
                 size={14}
                 color={COLORS.accentText}
               />
@@ -250,9 +251,11 @@ const styles = StyleSheet.create({
 
   // KEEP TRACKING EN PIXELIFY SANS
   footerText: {
-    fontSize: 14,
+    textAlign: "center",
+    alignContent: "center",
+    alignItems: "center",
+    fontSize: 32,
     color: COLORS.headerText,
     fontFamily: "PixelifySans_600SemiBold",
-    fontStyle: "italic",
   },
 });
