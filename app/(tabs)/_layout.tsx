@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 
@@ -14,6 +14,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.tabIconDefault, // Use dynamic inactive color
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
@@ -36,11 +37,7 @@ export default function TabLayout() {
         options={{
           title: "Logs",
           tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={24}
-              name="book"
-              color={color}
-            />
+            <Ionicons name="list" size={24} color={color} />
           ),
         }}
       />
@@ -59,7 +56,7 @@ export default function TabLayout() {
         options={{
           title: "Data visualization",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="checklist" color={color} />
+            <Ionicons name="stats-chart" size={24} color={color} />
           ),
         }}
       />

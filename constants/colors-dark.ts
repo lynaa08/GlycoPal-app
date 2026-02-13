@@ -15,6 +15,7 @@ export const colors = {
   info: '#6a85b6',          // Bleu (boutons d'action)
   cardHeader: '#5C6BC0',    // Bleu pour header carte appointment
   cardBody: '#7986CB',      // Bleu pour body carte appointment
+  tabIconDefault: '#B0BEC5', // Light Grey for inactive tabs
 } as const;
 
 export default colors;

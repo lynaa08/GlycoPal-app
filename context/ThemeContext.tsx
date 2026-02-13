@@ -19,6 +19,7 @@ type ThemeColors = {
   info: string;
   cardHeader: string;
   cardBody: string;
+  tabIconDefault: string;
 };
 
 interface ThemeContextType {
