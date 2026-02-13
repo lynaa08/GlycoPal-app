@@ -1,9 +1,25 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import lightColors from '@/constants/colors-light';
-import darkColors from '@/constants/colors-dark';
+import { colors as darkColors } from '@/constants/colors-dark';
+import { colors as lightColors } from '@/constants/colors-light';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
-type ThemeColors = typeof lightColors;
+// Define a unified type that includes all possible color properties
+type ThemeColors = {
+  background: string;
+  card: string;
+  border: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  textPrimary: string;
+  textSecondary: string;
+  settings: string;
+  success: string;
+  danger: string;
+  warning: string;
+  info: string;
+  cardHeader: string;
+  cardBody: string;
+};
 
 interface ThemeContextType {
   colors: ThemeColors;
@@ -13,13 +29,9 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const deviceTheme = useColorScheme();
-  const [isDarkMode, setIsDarkMode] = useState(deviceTheme === 'dark');
-
-  useEffect(() => {
-    setIsDarkMode(deviceTheme === 'dark');
-  }, [deviceTheme]);
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // Set default to dark mode
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);

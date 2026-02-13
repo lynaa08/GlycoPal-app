@@ -1,3 +1,4 @@
+import { useTheme } from '@/context/ThemeContext';
 import {
   PixelifySans_400Regular,
   PixelifySans_600SemiBold,
@@ -24,6 +25,7 @@ const glucoseData = [
 ];
 
 export default function DataVisualizationScreen() {
+  const { colors, isDarkMode, toggleTheme } = useTheme();
   const [selectedTimeRange, setSelectedTimeRange] = useState("Last 90 days");
   const [selectedMeal, setSelectedMeal] = useState("All meals");
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
@@ -44,40 +46,40 @@ export default function DataVisualizationScreen() {
   const hypoThreshold = 100;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            Glyco<Text style={styles.titleBlue}>Pal</Text>
+          <Text style={[styles.title, { color: colors.textPrimary }]}>
+            Glyco<Text style={{ color: colors.accent }}>Pal</Text>
           </Text>
         </View>
-        <TouchableOpacity style={styles.themeButton}>
-          <Ionicons name="sunny" size={24} color="#FFFFFF" />
+        <TouchableOpacity style={[styles.themeButton, { backgroundColor: colors.secondary }]} onPress={toggleTheme}>
+          <Ionicons name={isDarkMode ? "sunny" : "moon"} size={22} color="white" />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Subtitle */}
-        <Text style={styles.subtitle}>Blood glucose excursions</Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Blood glucose excursions</Text>
 
         {/* Filters Row */}
         <View style={styles.filtersRow}>
           {/* Time Range Dropdown */}
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
-              style={styles.dropdown}
+              style={[styles.dropdown, { backgroundColor: colors.secondary }]}
               onPress={() => {
                 setShowTimeDropdown(!showTimeDropdown);
                 setShowMealDropdown(false);
               }}
             >
-              <Text style={styles.dropdownText}>{selectedTimeRange}</Text>
-              <Ionicons name="chevron-down" size={16} color="#FFFFFF" />
+              <Text style={[styles.dropdownText, { color: colors.textSecondary }]}>{selectedTimeRange}</Text>
+              <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
             </TouchableOpacity>
 
             {showTimeDropdown && (
-              <View style={styles.dropdownMenu}>
+              <View style={[styles.dropdownMenu, { backgroundColor: colors.card, shadowColor: colors.textPrimary }]}>
                 {timeRanges.map((range) => (
                   <TouchableOpacity
                     key={range}
@@ -90,7 +92,8 @@ export default function DataVisualizationScreen() {
                     <Text
                       style={[
                         styles.dropdownItemText,
-                        selectedTimeRange === `Last ${range}` && styles.selectedItem,
+                        { color: colors.textSecondary },
+                        selectedTimeRange === `Last ${range}` && { color: colors.accent, fontFamily: 'PixelifySans_600SemiBold' },
                       ]}
                     >
                       {range}
@@ -104,18 +107,18 @@ export default function DataVisualizationScreen() {
           {/* Meal Type Dropdown */}
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
-              style={styles.dropdown}
+              style={[styles.dropdown, { backgroundColor: colors.secondary }]}
               onPress={() => {
                 setShowMealDropdown(!showMealDropdown);
                 setShowTimeDropdown(false);
               }}
             >
-              <Text style={styles.dropdownText}>{selectedMeal}</Text>
-              <Ionicons name="chevron-down" size={16} color="#FFFFFF" />
+              <Text style={[styles.dropdownText, { color: colors.textSecondary }]}>{selectedMeal}</Text>
+              <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
             </TouchableOpacity>
 
             {showMealDropdown && (
-              <View style={styles.dropdownMenu}>
+              <View style={[styles.dropdownMenu, { backgroundColor: colors.card, shadowColor: colors.textPrimary }]}>
                 {mealTypes.map((meal) => (
                   <TouchableOpacity
                     key={meal}
@@ -128,7 +131,8 @@ export default function DataVisualizationScreen() {
                     <Text
                       style={[
                         styles.dropdownItemText,
-                        selectedMeal === meal && styles.selectedItem,
+                        { color: colors.textSecondary },
+                        selectedMeal === meal && { color: colors.accent, fontFamily: 'PixelifySans_600SemiBold' },
                       ]}
                     >
                       {meal}
@@ -141,12 +145,12 @@ export default function DataVisualizationScreen() {
         </View>
 
         {/* Chart Container */}
-        <View style={styles.chartCard}>
+        <View style={[styles.chartCard, { backgroundColor: colors.card }]}>
           {/* Y-axis labels */}
           <View style={styles.yAxisContainer}>
             {[600, 500, 400, 300, 200, 100, 0].map((value, index) => (
               <View key={value} style={styles.yAxisLabel}>
-                <Text style={styles.yAxisText}>{value}.</Text>
+                <Text style={[styles.yAxisText, { color: colors.textSecondary }]}>{value}.</Text>
               </View>
             ))}
           </View>
@@ -156,7 +160,7 @@ export default function DataVisualizationScreen() {
             {/* Grid Lines */}
             <View style={styles.gridContainer}>
               {[0, 1, 2, 3, 4, 5, 6].map((index) => (
-                <View key={index} style={styles.gridLine} />
+                <View key={index} style={[styles.gridLine, { backgroundColor: colors.border }]} />
               ))}
             </View>
 
@@ -178,6 +182,7 @@ export default function DataVisualizationScreen() {
                     style={[
                       styles.dataPoint,
                       {
+                        backgroundColor: colors.accent,
                         bottom: `${bottom}%`,
                         left: `${(index / (glucoseData.length - 1)) * 90 + 5}%`,
                       },
@@ -190,13 +195,13 @@ export default function DataVisualizationScreen() {
         </View>
 
         {/* Latest Reading Card */}
-        <View style={styles.readingCard}>
+        <View style={[styles.readingCard, { backgroundColor: colors.card }]}>
           <View style={styles.checkmark}>
             <Ionicons name="checkmark" size={32} color="#8BC34A" />
           </View>
           <View style={styles.readingInfo}>
             <Text style={styles.readingValue}>130 mg / dl</Text>
-            <Text style={styles.readingDate}>08-02-2026 08:21</Text>
+            <Text style={[styles.readingDate, { color: colors.textSecondary }]}>08-02-2026 08:21</Text>
           </View>
         </View>
       </ScrollView>
@@ -341,7 +346,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "#2A2F6A",
     width: "100%",
-  }, 
+  },
   hyperLine: {
     position: "absolute",
     left: 0,
@@ -363,14 +368,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     borderTopWidth: 2,
-    borderTopColor: "#f72a2a",
+    borderTopColor: "#f02727",
     borderStyle: "dashed",
   },
   hypoText: {
     position: "absolute",
     left: 10,
     top: 5,
-    color: "#f72a2a",
+    color: "#f02727",
     fontSize: 10,
     fontFamily: "PixelifySans_400Regular",
   },
