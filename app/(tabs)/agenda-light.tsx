@@ -1,4 +1,4 @@
-import COLORS from '@/constants/colors-dark';
+import  colors from '@/constants/colors-dark';
 import { PixelifySans_400Regular, PixelifySans_700Bold, useFonts } from '@expo-google-fonts/pixelify-sans';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -32,7 +32,7 @@ export default function AgendaScreen() {
         </View>
         {/* 🔥 BOUTON SETTINGS AJOUTÉ ICI */}
         <TouchableOpacity style={styles.settingsBtn}>
-          <Ionicons name="settings-outline" size={22} color="white" />
+          <Ionicons name="moon" size={22} color="white" />
         </TouchableOpacity>
       </View>
           {/* 🔵 LIGNE HORIZONTALE AJOUTÉE ICI */}
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   verticalLine: {
     width: 1,
     alignSelf: 'stretch',
-    backgroundColor: COLORS.border,
+    backgroundColor: colors.border,
     marginHorizontal: 4,
   },
   headerDate: {
@@ -163,6 +163,14 @@ const styles = StyleSheet.create({
   },
   cell: {
     fontFamily: 'PixelifySans_400Regular',
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    justifyContent: 'center',
+    width: '100%',
+    maxWidth: '100%',
+    overflow: 'scroll',
+    height: 100,
+    verticalAlign: 'middle',
     fontSize: 13,
     color: '#D8D8D8',
   },

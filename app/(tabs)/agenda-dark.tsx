@@ -1,4 +1,4 @@
-import COLORS from '@/constants/colors-light';
+import colors from '@/constants/colors-light';
 import { PixelifySans_400Regular, PixelifySans_700Bold, useFonts } from '@expo-google-fonts/pixelify-sans';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -32,7 +32,7 @@ return (
         </View>
         {/* 🔥 BOUTON SETTINGS AJOUTÉ ICI */}
         <TouchableOpacity style={styles.settingsBtn}>
-        <Ionicons name="settings-outline" size={22} color="white" />
+        <Ionicons name="sunny" size={22} color="white" />
         </TouchableOpacity>
     </View>
           {/* 🔵 LIGNE HORIZONTALE AJOUTÉE ICI */}
@@ -130,7 +130,7 @@ headerText: {
 verticalLine: {
     width: 1,
     alignSelf: 'stretch',
-    backgroundColor: COLORS.border,
+    backgroundColor: colors.border,
     marginHorizontal: 4,
 },
 headerDate: {
