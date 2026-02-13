@@ -62,7 +62,7 @@ export default function SignupScreen() {
           />
         </View>
 
-        {/* Button to go to patient-infos */}
+        {/* Button to go to patient-infos for user type selection */}
         <TouchableOpacity 
           style={styles.nextButton} 
           onPress={() => router.push('/patient-infos')}

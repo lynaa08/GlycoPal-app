@@ -40,10 +40,10 @@ export default function LoginScreen() {
           />
         </View>
 
-        {/* Next button that takes you to index (main tabs) */}
+        {/* Next button that takes you to patient-infos for user type selection */}
         <TouchableOpacity 
           style={styles.loginButton} 
-          onPress={() => router.replace('/(tabs)')}
+          onPress={() => router.push('/patient-infos')}
         >
           <Text style={styles.loginButtonText}>Next</Text>
         </TouchableOpacity>
